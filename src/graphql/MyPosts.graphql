@@ -1,0 +1,10 @@
+query MyPosts($findOneUserId: Int!) {
+  findOneUser(id: $findOneUserId) {
+    id
+    email
+    posts {
+      title
+      content
+    }
+  }
+}
