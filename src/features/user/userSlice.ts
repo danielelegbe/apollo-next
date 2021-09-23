@@ -2,26 +2,42 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 // Define a type for the slice state
-interface User {
+interface LoggedInUser {
   accessToken: string;
+  id: number | null;
 }
 
 // Define the initial state using that type
-const initialState: User = {
+
+const initialState: LoggedInUser = {
   accessToken: '',
+  id: null,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setAccessToken: (state, action: PayloadAction<string>) => {
-      state.accessToken = action.payload;
+    setUser: (
+      state: LoggedInUser,
+      { payload }: PayloadAction<LoggedInUser>
+    ) => {
+      return {
+        ...state,
+        accessToken: payload.accessToken,
+        id: payload.id,
+      };
+    },
+    setAccessToken: (
+      state: LoggedInUser,
+      { payload }: PayloadAction<string>
+    ) => {
+      state.accessToken = payload;
     },
   },
 });
 
-export const { setAccessToken } = userSlice.actions;
+export const { setUser, setAccessToken } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

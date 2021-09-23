@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.11",
+    "@badrap/bar-of-progress": "^0.1.2",
     "@reduxjs/toolkit": "^1.6.1",
     "apollo-link-token-refresh": "^0.3.2",
     "formik": "^2.2.9",

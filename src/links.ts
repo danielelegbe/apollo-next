@@ -1,10 +1,10 @@
 import { HttpLink } from '@apollo/client';
-import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
-import { store } from './app/store';
-import { setAccessToken } from './features/user/userSlice';
+import { onError } from '@apollo/client/link/error';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import jwtDecode from 'jwt-decode';
+import { store } from './app/store';
+import { setAccessToken, setUser } from './features/user/userSlice';
 
 export const tokenRefreshLink = new TokenRefreshLink({
   accessTokenField: 'accessToken',
@@ -66,6 +66,7 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
 export const authLink = setContext((_, { headers }) => {
   const { user } = store.getState();
   const token = user.accessToken;
+
   return {
     headers: { ...headers, authorization: token ? `Bearer ${token}` : '' },
   };

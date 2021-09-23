@@ -1,14 +1,13 @@
+import { Field, Form, Formik } from 'formik';
+import { useRouter } from 'next/router';
 import React from 'react';
-import { Formik, Field, Form } from 'formik';
-import { useLoginMutation, MeQuery, MeDocument } from '../generated/graphql';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../features/user/userSlice';
+import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
 import withApollo from '../lib/withApollo';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../app/store';
-import { setAccessToken } from '../features/user/userSlice';
 
 const Login = () => {
-  const user = useSelector((state: RootState) => state.user);
-  // console.log(user);
+  const router = useRouter();
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
   return (
@@ -28,19 +27,24 @@ const Login = () => {
               });
             },
           });
-          if (response.data) {
-            dispatch(setAccessToken(response.data?.login.accessToken));
+          if (response.data?.login) {
+            dispatch(
+              setUser({
+                accessToken: response.data.login.accessToken,
+                id: response.data.login.user.id,
+              })
+            );
+            router.push('/');
           }
-          // console.log(user);
         }}
       >
         <Form>
           <div>
-            <Field name='email' placeholder='email' />
+            <Field name="email" placeholder="email" />
           </div>
-          <Field name='password' placeholder='password' />
+          <Field name="password" placeholder="password" />
           <div>
-            <button type='submit'>submit</button>
+            <button type="submit">submit</button>
           </div>
         </Form>
       </Formik>

@@ -3,5 +3,8 @@ query Posts {
     id
     title
     content
+    user {
+      email
+    }
   }
 }

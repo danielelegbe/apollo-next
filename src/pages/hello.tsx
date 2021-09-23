@@ -12,7 +12,7 @@ const Hello = () => {
 
   return (
     <div>
-      {data?.posts.map((post) => (
+      {data.posts.map((post) => (
         <div key={post.id}>
           <p>{post.title}</p>
           <p>{post.content}</p>

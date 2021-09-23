@@ -1,0 +1,11 @@
+query MeAndMyPosts {
+  me {
+    id
+    email
+    posts {
+      id
+      title
+      content
+    }
+  }
+}
